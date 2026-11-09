@@ -1,0 +1,162 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 92px;
+  }
+
+  body {
+    @apply bg-ink text-cream/80 font-body antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: rgba(201, 169, 97, 0.32);
+    color: #fff;
+  }
+
+  h1, h2, h3, h4, h5 {
+    @apply text-cream;
+  }
+
+  :focus-visible {
+    outline: 2px solid #C9A961;
+    outline-offset: 3px;
+  }
+
+  input, select, textarea, button {
+    font: inherit;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: #0A0A0C; }
+  ::-webkit-scrollbar-thumb { background: #33302a; border: 2px solid #0A0A0C; border-radius: 99px; }
+  ::-webkit-scrollbar-thumb:hover { background: #9C7C3C; }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-shell px-5 sm:px-8 lg:px-12;
+  }
+
+  .eyebrow {
+    @apply font-heading text-[11px] font-semibold uppercase tracking-widest2 text-gold;
+  }
+
+  .eyebrow-line {
+    @apply inline-flex items-center gap-3;
+  }
+  .eyebrow-line::before {
+    content: '';
+    @apply inline-block h-px w-8 bg-gold/70;
+  }
+
+  .display {
+    @apply font-display font-medium leading-[1.08] tracking-[-0.02em] text-cream;
+  }
+
+  .gold-text {
+    @apply bg-gold-gradient bg-clip-text text-transparent;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2.5 rounded-sm px-6 py-3.5 font-heading text-[11px] font-bold uppercase tracking-[0.18em] transition-all duration-300;
+  }
+
+  .btn-gold {
+    @apply btn bg-gold-gradient text-ink shadow-gold hover:brightness-110 hover:-translate-y-0.5;
+  }
+
+  .btn-outline {
+    @apply btn border border-gold/50 text-gold hover:border-gold hover:bg-gold/10 hover:-translate-y-0.5;
+  }
+
+  .btn-ghost {
+    @apply btn border border-white/15 text-cream/90 hover:border-gold/60 hover:text-gold hover:-translate-y-0.5;
+  }
+
+  .btn-light {
+    @apply btn bg-cream text-ink hover:bg-white hover:-translate-y-0.5;
+  }
+
+  .hairline {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-gold/30 to-transparent;
+  }
+
+  .card-dark {
+    @apply border border-white/[0.08] bg-ink-800/80 backdrop-blur-sm transition-all duration-500;
+  }
+
+  .field {
+    @apply w-full rounded-sm border border-white/[0.12] bg-white/[0.035] px-4 py-3.5 text-sm text-cream placeholder:text-mist/50 transition-colors duration-300 focus:border-gold/70 focus:bg-white/[0.06] focus:outline-none;
+  }
+
+  .field-label {
+    @apply mb-2 block font-heading text-[10px] font-semibold uppercase tracking-[0.18em] text-mist;
+  }
+
+  .divider-gold {
+    background: linear-gradient(90deg, transparent, rgba(201,169,97,0.55), transparent);
+  }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .text-pretty { text-wrap: pretty; }
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgba(201,169,97,0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(201,169,97,0.055) 1px, transparent 1px);
+    background-size: 62px 62px;
+  }
+  .noise::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.16;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+  .mask-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  }
+}
+
+/* Per-division accent identity (within the black/gold brand) */
+.division-card {
+  transition: border-color 0.5s ease, box-shadow 0.5s ease, transform 0.5s ease;
+}
+.division-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 30px 80px -40px var(--accent);
+  transform: translateY(-5px);
+}
+.division-accent-text { color: var(--accent); }
+.division-accent-bg { background-color: var(--accent); }
+
+/* Fine gold grain / film grain overlay used on cinematic sections */
+.film-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.22'/%3E%3C/svg%3E");
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

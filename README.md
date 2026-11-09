@@ -432,3 +432,75 @@ Submit website requirements
 My next step will be to prepare a complete website blueprint with the actual homepage content, page-by-page structure, design direction, animations, functionality and a master AI prompt that you can use to build the website.
 
 The aim is to create a real business platform, not just an attractive online brochure.
+
+---
+
+# Appendix — Website implementation
+
+This appendix was added when the website was built from the brief above. The original brief is preserved verbatim.
+
+## What was built
+
+A complete, responsive, multi-page premium corporate website for **CLINTON GLOBAL INVESTMENT** in the recommended black / champagne-gold / white identity.
+
+| Route | Page |
+| --- | --- |
+| `/` | Home — cinematic hero, who we are, three divisions, why choose us, featured work, process, customer voices |
+| `/about` | About Us — story, vision / mission / approach, values, divisions, working process |
+| `/services` | Our Services — overview plus a detailed section for each division |
+| `/services/marine` | Marine Outboard Services — dedicated service portal, gallery, inquiry form, FAQ |
+| `/services/real-estate` | Real Estate Management — dedicated service portal, gallery, inquiry form, FAQ |
+| `/services/fashion-ai` | Fashion & AI Advertising — split fashion / AI sections, gallery, inquiry form, FAQ |
+| `/projects` | Our Projects — filterable portfolio gallery with a lightbox viewer |
+| `/contact` | Contact Us — inquiry form, contact details, Google Maps, FAQ |
+| `/admin` | Inquiry Dashboard — lead management demo (status, reply, delete, CSV export) |
+| `/privacy`, `/terms` | Legal pages |
+| `*` | Styled 404 page |
+
+### Features implemented from sections 3, 4 and 8
+
+- Full-screen hero with an animated three-image cinematic sequence (marine → real estate → fashion & AI), each division selectable from the bottom strip.
+- **Get a Quote** modal available site-wide (navigation, CTAs, division pages) and a persistent **WhatsApp** button.
+- Dedicated inquiry form per division *and* a general form on the contact page, with validation, consent and a success reference.
+- Search command palette (`Ctrl`/`Cmd` + `K`) across pages, divisions, services and projects.
+- Project gallery with category filters and a keyboard-navigable lightbox.
+- Scroll reveals, staggered hero text, hover transitions, marquee, progress bar, scroll cue, accordion FAQs and `prefers-reduced-motion` support.
+- Lead management demo: submissions are stored in the browser and viewable / exportable in `/admin`.
+- Google Maps embed, semantic HTML, skip link, ARIA labels, focus states, per-route title/description, Open Graph tags and Organization JSON-LD.
+- Mobile-first responsive layout with a full-screen mobile menu.
+
+### Tech used and why
+
+The brief (section 6) suggests Next.js + Tailwind + Framer Motion + GSAP + Supabase + Vercel. This build uses **Vite + React + TypeScript + Tailwind CSS + Framer Motion + lucide-react + React Router** so it runs reliably as a self-contained preview with no external services or API keys. Framer Motion covers the animation layer (GSAP is not required for the effects used here). Tailwind is used exactly as recommended. For a production launch, Next.js would add server rendering / static generation for stronger SEO, and Supabase would replace the browser-local lead store.
+
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # production bundle in dist/
+npm run preview
+```
+
+All site copy, division data, services, projects, FAQs and navigation live in `src/data/site.ts` — one place to edit content. Design tokens live in `tailwind.config.js` and `src/index.css`. Images are in `public/images/`.
+
+## Important: content still to supply before launch
+
+Section 7 of the brief lists details that were not provided. Placeholder values are deliberately centralised in `config` at the top of `src/data/site.ts`:
+
+- company logo (a monogram wordmark is used as a stand-in), founder / CEO profile, company history and registration details
+- verified phone number, WhatsApp number, email address, physical address and social media URLs
+- genuine customer testimonials — **no invented reviews or ratings are published**, per section 3
+- real photographs of products, completed projects and authorised property listings
+- company introduction / promotional videos
+
+The photography currently in `public/images/` is **AI-generated illustrative imagery**, not documentation of real projects; the portfolio page and footer say so explicitly. The image generator hit its per-turn limit of 10, so the set was reused across sections and the AI advertising tile uses a custom SVG visual instead of a photograph.
+
+Legal pages are templates and should be reviewed by qualified counsel. Contact details on the contact page are flagged as placeholders.
+
+## Production checklist
+
+1. Replace all values in `config` (`src/data/site.ts`) with verified details; supply the official logo.
+2. Connect a database (e.g. Supabase) and wire `src/lib/leads.ts` to it; add authentication and access control to `/admin`.
+3. Add server-side form delivery (email/CRM), spam protection and analytics.
+4. Confirm the domain from section 9, add canonical URLs, a sitemap and `robots.txt`, and deploy over HTTPS (Vercel or similar).
+5. Swap illustrative imagery for verified photography and publish genuine, permissioned testimonials.
+6. Review the privacy policy and terms with legal counsel.
